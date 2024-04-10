@@ -1,5 +1,5 @@
 use gtk::prelude::*;
-use gtk::{ glib, Application, ApplicationWindow, Text };
+use gtk::{ glib, Application, ApplicationWindow, Button };
 
 const APP_ID: &str = "me.zax71.HelloWorld";
 
@@ -14,11 +14,26 @@ fn main() -> glib::ExitCode {
 }
 
 fn build_ui(app: &Application) {
-    let text = Text::builder().text("Hello World").build();
+    let button = Button::builder()
+        .label("Click me!")
+        .margin_top(12)
+        .margin_bottom(12)
+        .margin_end(12)
+        .margin_start(12)
+        .build();
+
+    button.connect_clicked(|button| {
+        if button.label().unwrap() == "Click me!" {
+            button.set_label("Clicked");
+        } else {
+            button.set_label("Click me!");
+        }
+    });
+
     let window = ApplicationWindow::builder()
         .application(app)
         .title("Hello GTK")
-        .child(&text)
+        .child(&button)
         .build();
 
     window.present();
