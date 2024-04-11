@@ -1,5 +1,5 @@
+use gtk::{ glib, Application, ApplicationWindow, Box, Label };
 use gtk::prelude::*;
-use gtk::{ glib, Application, ApplicationWindow, Button };
 
 const APP_ID: &str = "me.zax71.HelloWorld";
 
@@ -14,26 +14,17 @@ fn main() -> glib::ExitCode {
 }
 
 fn build_ui(app: &Application) {
-    let button = Button::builder()
-        .label("Click me!")
-        .margin_top(12)
-        .margin_bottom(12)
-        .margin_end(12)
-        .margin_start(12)
-        .build();
+    let todo1 = Label::builder().label("A todo 1").build();
+    let todo2 = Label::builder().label("A todo 2").build();
 
-    button.connect_clicked(|button| {
-        if button.label().unwrap() == "Click me!" {
-            button.set_label("Clicked");
-        } else {
-            button.set_label("Click me!");
-        }
-    });
+    let todos_list = Box::new(gtk::Orientation::Horizontal, 10);
+    todos_list.append(&todo1);
+    todos_list.append(&todo2);
 
     let window = ApplicationWindow::builder()
         .application(app)
         .title("Hello GTK")
-        .child(&button)
+        .child(&todos_list)
         .build();
 
     window.present();
